@@ -34,6 +34,38 @@ Heroku
 >  
 **Error: Cannot find module 'cli-engine'**
 >
+**preparation**
+> To set up your application for deployment, you need to add the ```port``` environment variable that will be used by *heroku* into your main server file.
+>  
+```
+// example main server file
+
+app.listen(process.env.PORT || 3000, function(){
+  console.log('now listening to smooth sounds of port 3000...');
+});
+```
+>  
+>  Second, you need to specify the ```"start"``` script command in the ```package.json``` file.
+```
+// example package.json file
+
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
+```
+>
 > Saw this error immediately after attempting to execute ```heroku create```
 >  
 ```
@@ -61,5 +93,28 @@ brew install heroku
 ```
 >  [Link](https://github.com/heroku/cli/issues/653) to a stackoverflow about an issue with this error message.
 >  
+
+
+----------
+
+mLab
+-------------
+>  
+> *Remember* to create a database user for the database you create on mLab.
+> The *database user* will be used with the **MongoDB URI**, which is used for connecting with your mongo database.
+>  
+```
+mongodb://<dbuser>:<dbpassword>@bd12345.mlab.com:12345/exampledb
+```
+>
+> *Remember* to add this to your code that is initializing the connection to the mongo database.
+>  
+```
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/example');
+```
+> Also add the ```MONGODB_URI``` environment variable to ```heroku```, either through the terminal or from the ui.
+>
+> To set the config var on Heroku execute the following: ```heroku config:set ENVNAME=valueOfEnv```
+> 	To view config vars that are set use: ```heroku config```
 
 ----------
