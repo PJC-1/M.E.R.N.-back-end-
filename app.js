@@ -28,6 +28,6 @@ app.get('/', function(req, res) {
   res.sendFile('views/index.html', { root: __dirname });
 });
 
-app.listen(port, function(){
+app.listen(process.env.PORT || port, function(){
   console.log(`your listening to smooth sounds of port ${port}...`);
 });
