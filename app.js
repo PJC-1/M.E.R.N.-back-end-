@@ -7,7 +7,7 @@ var app = express();
 var port = 4200;
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/mernTest')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mernTest')
   .then(() => {
     console.log('mongodb connection success!');
   })
